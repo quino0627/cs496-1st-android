@@ -10,9 +10,9 @@ import android.widget.AdapterView
 
 class ContactsAdapter( val contactsList: ArrayList<Contact>): RecyclerView.Adapter<ContactsAdapter.ViewHolder>(){
 
-    private lateinit var listener: AdapterView.OnItemSelectedListener
+    private lateinit var listener: OnItemSelectedListener
 
-    fun setClickListener(listener: AdapterView.OnItemSelectedListener) {
+    fun setClickListener(listener: OnItemSelectedListener) {
         this.listener = listener
     }
 
