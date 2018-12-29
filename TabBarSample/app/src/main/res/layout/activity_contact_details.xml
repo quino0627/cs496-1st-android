@@ -47,5 +47,5 @@
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="114dp"
             android:layout_marginEnd="71dp"
-            android:background="@drawable/phone_call" />
+            android:background="@drawable/message_image" />
 </RelativeLayout>

@@ -28,8 +28,13 @@ class MainActivity : AppCompatActivity() {
     } //used as companion object
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
+    val MULTIPLE_PERMISSIONS = 10;
+    val permissions = arrayOf(Manifest.permission.READ_CONTACTS, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CALL_PHONE, Manifest.permission.SEND_SMS, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
     val REQUEST_CONTACT = 1
+    val REQUEST_READ_STORAGE = 1
+    val REQUEST_CALL = 1
+    val REQUEST_SMS = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,13 +49,13 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(view, "주소록 추가하기 기능 implement", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
-
+        ActivityCompat.requestPermissions(this, permissions, MULTIPLE_PERMISSIONS)
         /*contacts*/
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, arrayOf<String>(Manifest.permission.READ_CONTACTS), REQUEST_CONTACT)
-        }else{
-            setContacts()
-        }
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
+//            ActivityCompat.requestPermissions(this, arrayOf<String>(Manifest.permission.READ_CONTACTS), REQUEST_CONTACT)
+//        }else{
+//            setContacts()
+//        }
 
     }
 
