@@ -2,11 +2,13 @@ package com.example.quino0627.tabbarsample
 
 import android.content.Context
 import android.support.v7.widget.AppCompatTextView
+import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import org.jetbrains.anko.sdk25.coroutines.onClick
 
 class ContactsAdapter( val contactsList: ArrayList<Contact>): RecyclerView.Adapter<ContactsAdapter.ViewHolder>(){
 
@@ -23,6 +25,9 @@ class ContactsAdapter( val contactsList: ArrayList<Contact>): RecyclerView.Adapt
     override fun onBindViewHolder(holder: ContactsAdapter.ViewHolder, position: Int) {
         holder.bountItem(contactsList[position])
 
+        holder.container.onClick {
+            listener.onItemSelected(contactsList[position])
+        }
 
     }
 
@@ -34,7 +39,7 @@ class ContactsAdapter( val contactsList: ArrayList<Contact>): RecyclerView.Adapt
     class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
         var textName = itemView.findViewById<AppCompatTextView>(R.id.contact_name)
         var textPhoneNumber = itemView.findViewById<AppCompatTextView>(R.id.contact_phone_number)
-
+        val container = itemView.findViewById<CardView>(R.id.container)
         fun bountItem(contact: Contact) {
             val textName = itemView.findViewById<AppCompatTextView>(R.id.contact_name) as AppCompatTextView
             val textPhoneNumber = itemView.findViewById<AppCompatTextView>(R.id.contact_phone_number) as AppCompatTextView

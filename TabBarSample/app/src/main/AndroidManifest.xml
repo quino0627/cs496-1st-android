@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.example.quino0627.tabbarsample">
 
-
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
     <application
@@ -21,6 +20,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".ContactDetailsActivity">
         </activity>
     </application>
 
