@@ -7,6 +7,10 @@
     android:layout_height="match_parent"
     tools:context="com.example.quino0627.tabbarsample.MainActivity"
 >
+    <android.support.v4.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/swipeRefreshLayout">
 
     <android.support.v7.widget.RecyclerView
             android:id="@+id/contacts_recycler_view"
@@ -15,5 +19,5 @@
             android:padding="10dp"
 
             />
-
+    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>
