@@ -28,7 +28,7 @@ class GalleryActivity : Fragment (){
 
         val lManager = GridLayoutManager(activity, 2, GridLayout.VERTICAL, false)
 
-        recyclerView.layoutManager = lManager
+        recyclerView.layoutManager = lManager as RecyclerView.LayoutManager?
         recyclerView.adapter = adapter
         recyclerView.setHasFixedSize(false)
 
