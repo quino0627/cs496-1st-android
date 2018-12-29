@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity() {
                     return ContactsActivity()
                 }
                 1 -> {
-                    return PicturesActivity()
+                    return GalleryActivity()
                 }
                 2 -> {
                     return ThirdActivity()
