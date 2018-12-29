@@ -1,12 +1,12 @@
 package com.example.quino0627.tabbarsample
 
 import android.Manifest
+import android.app.Fragment
 import android.content.ContentResolver
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.support.v4.app.ActivityCompat
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -17,8 +17,9 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.fragment_contact.*
 import com.example.quino0627.tabbarsample.MainActivity.Companion.contactsList
+import com.example.quino0627.tabbarsample.R.id.contacts_recycler_view
 
-class ContactsActivity : Fragment (){
+class ContactsActivity : android.support.v4.app.Fragment(){
 
     companion object {
         fun newInstance(): ContactsActivity {
