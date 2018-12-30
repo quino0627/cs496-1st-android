@@ -28,7 +28,7 @@ class GalleryActivity : Fragment (), GalleryAdapter.OnItemSelectedListener {
             name,
             asdf
         )
-
+        adapter.setClickListener(this)
         val lManager = GridLayoutManager(activity, 2, GridLayout.VERTICAL, false)
 
         recyclerView.layoutManager = lManager as RecyclerView.LayoutManager?
@@ -41,7 +41,7 @@ class GalleryActivity : Fragment (), GalleryAdapter.OnItemSelectedListener {
     override fun onItemSelected(selectedImage: Int) {
         Log.d("working?", "PLZ")
         var intent = Intent(activity, FullScreenImageActivity::class.java)
-        intent.putExtra("image", selectedImage)
+        intent.putExtra("image", selectedImage.toString())
         startActivity(intent)
     }
 }

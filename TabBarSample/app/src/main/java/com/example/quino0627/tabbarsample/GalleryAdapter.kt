@@ -18,6 +18,10 @@ class GalleryAdapter(private val place: IntArray, private val name: Array<String
 
     private lateinit var listener: OnItemSelectedListener
 
+    fun setClickListener(listener: OnItemSelectedListener){
+        this.listener = listener
+    }
+
     override fun getItemCount(): Int {
         return place.size
     }
