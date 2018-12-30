@@ -1,6 +1,7 @@
 package com.example.quino0627.tabbarsample
 
 import android.Manifest
+import android.app.PendingIntent.getActivity
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -169,10 +170,20 @@ class MainActivity : AppCompatActivity() {
     fun setPhotos(): ArrayList<String> {
         val photoList : ArrayList<String> = ArrayList()
         Log.d("Check1", "hello")
-        val cursor = contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,null,null,null, MediaStore.Images.ImageColumns.DATE_TAKEN + "DESC")
+        //val cursor = contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,null,null,null, MediaStore.Images.ImageColumns.DATE_TAKEN + "DESC")
+        val projection = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = contentResolver.query(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, // 이미지 컨텐트 테이블
+            projection,
+            null, null, null
+        )// DATA를 출력
+        // 모든 개체 출력
+
         Log.d("cursor", cursor.toString())
+
         if (cursor != null) {
             while (cursor.moveToNext()) {
+                Log.d("ASDFASDFASDF", MediaStore.Images.Media.DATA)
                 photoList.add(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)))
             }
         }
