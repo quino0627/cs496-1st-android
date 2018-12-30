@@ -10,7 +10,8 @@
             android:layout_height="200dp"
             app:cardCornerRadius="5dp"
             app:cardElevation="5dp"
-            android:layout_margin="11dp">
+            android:layout_margin="11dp"
+            android:id="@+id/image-container">
         <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
 
             <ImageView
