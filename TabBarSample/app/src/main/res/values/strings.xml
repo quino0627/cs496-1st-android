@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TabBarSample</string>
+    <string name="app_name">1stAssignment</string>
     <string name="tab_text_1">CONTACTS</string>
     <string name="tab_text_2">PICTURES</string>
     <string name="tab_text_3">THIRD ONE</string>
