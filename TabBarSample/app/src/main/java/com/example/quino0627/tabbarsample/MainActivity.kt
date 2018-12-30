@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Picture
 import android.net.Uri
 import android.support.design.widget.TabLayout
 import android.support.design.widget.Snackbar
@@ -14,6 +15,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.util.Log
 import android.view.*
@@ -25,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         var contactsList: ArrayList<Contact>? = null
+        var photoList: ArrayList<String>? = null
     } //used as companion object
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
@@ -59,15 +62,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
     override fun onStart() {
         super.onStart()
         contactsList = setContacts()
+        photoList = setPhotos()
     }
 
     override fun onResume() {
         super.onResume()
         contactsList = setContacts()
+        photoList = setPhotos()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -120,6 +124,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (requestCode == REQUEST_CONTACT) setContacts()
+        if (requestCode == REQUEST_READ_STORAGE) setPhotos()
 
     }
 
@@ -159,5 +164,21 @@ class MainActivity : AppCompatActivity() {
         Log.d("isAdapterExist?",adapter.toString())
         Log.d("isRecyclerViewNull", ((contacts_recycler_view == null).toString()))
         return contactsList
+    }
+
+    fun setPhotos(): ArrayList<String> {
+        val photoList : ArrayList<String> = ArrayList()
+        Log.d("Check1", "hello")
+        val cursor = contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,null,null,null, MediaStore.Images.ImageColumns.DATE_TAKEN + "DESC")
+        Log.d("cursor", cursor.toString())
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                photoList.add(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)))
+            }
+        }
+        cursor.close()
+        val adapter = ThirdAdapter(photoList)
+        Log.d("isAdapterExist?",adapter.toString())
+        return photoList
     }
 }
