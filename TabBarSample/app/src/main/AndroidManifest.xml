@@ -26,6 +26,8 @@
         </activity>
         <activity android:name=".ContactDetailsActivity">
         </activity>
+        <activity android:name=".FullScreenImageActivity">
+        </activity>
     </application>
 
 </manifest>
