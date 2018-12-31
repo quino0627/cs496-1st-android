@@ -1,9 +1,11 @@
 package com.example.quino0627.tabbarsample
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Picture
 import android.net.Uri
 import android.support.design.widget.TabLayout
 import android.support.design.widget.Snackbar
@@ -14,6 +16,7 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.util.Log
 import android.view.*
@@ -25,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         var contactsList: ArrayList<Contact>? = null
+        var photoList: ArrayList<String>? = null
     } //used as companion object
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
@@ -45,9 +49,11 @@ class MainActivity : AppCompatActivity() {
         container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "주소록 추가하기 기능 implement", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        fab.setOnClickListener {
+            var intent = Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI)
+            Log.d("CheckIntent", intent.toString())
+            startActivity(intent)
+                //view -> Snackbar.make(view, "주소록 추가하기 기능 implement", Snackbar.LENGTH_LONG).setAction("Action", null).show()
         }
         ActivityCompat.requestPermissions(this, permissions, MULTIPLE_PERMISSIONS)
         /*contacts*/
@@ -59,15 +65,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
     override fun onStart() {
         super.onStart()
         contactsList = setContacts()
+        photoList = setPhotos()
     }
 
     override fun onResume() {
         super.onResume()
         contactsList = setContacts()
+        photoList = setPhotos()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -120,6 +127,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         if (requestCode == REQUEST_CONTACT) setContacts()
+        if (requestCode == REQUEST_READ_STORAGE) setPhotos()
 
     }
 
@@ -159,5 +167,38 @@ class MainActivity : AppCompatActivity() {
         Log.d("isAdapterExist?",adapter.toString())
         Log.d("isRecyclerViewNull", ((contacts_recycler_view == null).toString()))
         return contactsList
+    }
+
+    fun setPhotos(): ArrayList<String> {
+        val photoList : ArrayList<String> = ArrayList()
+        Log.d("Check1", "hello")
+        //val cursor = contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,null,null,null, MediaStore.Images.ImageColumns.DATE_TAKEN + "DESC")
+        val projection = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = contentResolver.query(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, // 이미지 컨텐트 테이블
+            projection,
+            null, null, null
+        )// DATA를 출력
+        // 모든 개체 출력
+
+        Log.d("cursor", cursor.toString())
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                val dataColumnIndex = cursor.getColumnIndex(projection[0])
+                val filePath = cursor.getString(dataColumnIndex)
+                val imageUri = Uri.parse(filePath)
+                //photoList.add(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)))
+                photoList.add(imageUri.toString())
+
+                Log.d("ASDFASDFASDF", imageUri.toString())
+
+                //photoList.add(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)))
+            }
+        }
+        cursor.close()
+        val adapter = ThirdAdapter(photoList, this)
+        Log.d("isAdapterExist?",adapter.toString())
+        return photoList
     }
 }

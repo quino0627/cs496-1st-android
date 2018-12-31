@@ -28,6 +28,10 @@
         </activity>
         <activity android:name=".FullScreenImageActivity">
         </activity>
+        <activity android:name=".FullScreenImageActivity_forMyVersion">
+        </activity>
+        <activity android:name=".ForTestActivity">
+        </activity>
     </application>
 
 </manifest>
