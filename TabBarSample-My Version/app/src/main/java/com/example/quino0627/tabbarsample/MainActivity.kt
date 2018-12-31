@@ -27,7 +27,6 @@ import java.io.BufferedInputStream
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        var contactsList: ArrayList<Contact>? = null
         var photoList: ArrayList<String>? = null
     } //used as companion object
 
@@ -49,31 +48,17 @@ class MainActivity : AppCompatActivity() {
         container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
-//        fab.setOnClickListener {
-////            var intent = Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI)
-////            Log.d("CheckIntent", intent.toString())
-////            startActivity(intent)
-////                //view -> Snackbar.make(view, "주소록 추가하기 기능 implement", Snackbar.LENGTH_LONG).setAction("Action", null).show()
-////        }
         ActivityCompat.requestPermissions(this, permissions, MULTIPLE_PERMISSIONS)
-        /*contacts*/
-//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
-//            ActivityCompat.requestPermissions(this, arrayOf<String>(Manifest.permission.READ_CONTACTS), REQUEST_CONTACT)
-//        }else{
-//            setContacts()
-//        }
 
     }
 
     override fun onStart() {
         super.onStart()
-        contactsList = setContacts()
         photoList = setPhotos()
     }
 
     override fun onResume() {
         super.onResume()
-        contactsList = setContacts()
         photoList = setPhotos()
     }
 
@@ -126,47 +111,8 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        if (requestCode == REQUEST_CONTACT) setContacts()
         if (requestCode == REQUEST_READ_STORAGE) setPhotos()
 
-    }
-
-    fun setContacts():ArrayList<Contact> {
-        val contactsList: ArrayList<Contact> = ArrayList()
-        val cursor = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, ContactsContract.Contacts.SORT_KEY_PRIMARY )
-        val default_photo = BitmapFactory.decodeResource(this@MainActivity.getApplicationContext().getResources(), R.drawable.profile_pic)
-        var contactImage: Bitmap
-        Log.d("cursor", cursor.toString())
-        if(cursor.count > 0) {
-            while (cursor.moveToNext()) {
-                val id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
-                val my_contact_Uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, id)
-                val photo_stream = ContactsContract.Contacts.openContactPhotoInputStream(this@MainActivity.getContentResolver(), my_contact_Uri)
-                if (photo_stream != null) {
-                    val buf = BufferedInputStream(photo_stream)
-                    val btmp = BitmapFactory.decodeStream(buf)
-                    contactImage = btmp
-                }
-                else {
-                    contactImage = default_photo
-                }
-                contactsList.add(
-                    Contact(
-                        cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)),
-                        cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)),
-                        contactImage
-                    )
-                )
-            }
-        }else{
-            Log.d("No Contacts Avaliable", "asdf")
-        }
-        cursor.close()
-        Log.d("contactsList", contactsList.toString())
-        val adapter = ContactsAdapter(contactsList)
-        Log.d("isAdapterExist?",adapter.toString())
-        Log.d("isRecyclerViewNull", ((contacts_recycler_view == null).toString()))
-        return contactsList
     }
 
     fun setPhotos(): ArrayList<String> {
