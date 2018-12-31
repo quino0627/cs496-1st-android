@@ -49,12 +49,12 @@ class MainActivity : AppCompatActivity() {
         container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
-        fab.setOnClickListener {
-            var intent = Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI)
-            Log.d("CheckIntent", intent.toString())
-            startActivity(intent)
-                //view -> Snackbar.make(view, "주소록 추가하기 기능 implement", Snackbar.LENGTH_LONG).setAction("Action", null).show()
-        }
+//        fab.setOnClickListener {
+////            var intent = Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI)
+////            Log.d("CheckIntent", intent.toString())
+////            startActivity(intent)
+////                //view -> Snackbar.make(view, "주소록 추가하기 기능 implement", Snackbar.LENGTH_LONG).setAction("Action", null).show()
+////        }
         ActivityCompat.requestPermissions(this, permissions, MULTIPLE_PERMISSIONS)
         /*contacts*/
 //        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity() {
 
     fun setContacts():ArrayList<Contact> {
         val contactsList: ArrayList<Contact> = ArrayList()
-        val cursor = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, null)
+        val cursor = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, ContactsContract.Contacts.SORT_KEY_PRIMARY )
         val default_photo = BitmapFactory.decodeResource(this@MainActivity.getApplicationContext().getResources(), R.drawable.profile_pic)
         var contactImage: Bitmap
         Log.d("cursor", cursor.toString())
@@ -174,8 +174,7 @@ class MainActivity : AppCompatActivity() {
         Log.d("Check1", "hello")
         //val cursor = contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,null,null,null, MediaStore.Images.ImageColumns.DATE_TAKEN + "DESC")
         val projection = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor = contentResolver.query(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI, // 이미지 컨텐트 테이블
+        val cursor = contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, // 이미지 컨텐트 테이블
             projection,
             null, null, null
         )// DATA를 출력
