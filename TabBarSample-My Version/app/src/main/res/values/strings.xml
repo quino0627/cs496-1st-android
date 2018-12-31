@@ -5,4 +5,8 @@
     <string name="tab_text_3">THIRD ONE</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="submit">\u27A4</string>
+    <string name="draw">Draw Here</string>
+    <string name="username"></string>
+    <string name="password"></string>
 </resources>
