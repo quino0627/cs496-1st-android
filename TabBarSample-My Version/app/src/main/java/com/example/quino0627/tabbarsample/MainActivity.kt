@@ -1,7 +1,7 @@
 package com.example.quino0627.tabbarsample
 
 import android.Manifest
-import android.app.PendingIntent.getActivity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -49,9 +49,11 @@ class MainActivity : AppCompatActivity() {
         container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "주소록 추가하기 기능 implement", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        fab.setOnClickListener {
+            var intent = Intent(this, ForTestActivity::class.java)
+            Log.d("CheckIntent", intent.toString())
+            startActivity(intent)
+                //view -> Snackbar.make(view, "주소록 추가하기 기능 implement", Snackbar.LENGTH_LONG).setAction("Action", null).show()
         }
         ActivityCompat.requestPermissions(this, permissions, MULTIPLE_PERMISSIONS)
         /*contacts*/
@@ -183,12 +185,19 @@ class MainActivity : AppCompatActivity() {
 
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                Log.d("ASDFASDFASDF", MediaStore.Images.Media.DATA)
-                photoList.add(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)))
+                val dataColumnIndex = cursor.getColumnIndex(projection[0])
+                val filePath = cursor.getString(dataColumnIndex)
+                val imageUri = Uri.parse(filePath)
+                //photoList.add(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)))
+                photoList.add(imageUri.toString())
+
+                Log.d("ASDFASDFASDF", imageUri.toString())
+
+                //photoList.add(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)))
             }
         }
         cursor.close()
-        val adapter = ThirdAdapter(photoList)
+        val adapter = ThirdAdapter(photoList, this)
         Log.d("isAdapterExist?",adapter.toString())
         return photoList
     }

@@ -37,4 +37,7 @@ dependencies {
 
     implementation "org.jetbrains.anko:anko-common:$anko_version"
     implementation "org.jetbrains.anko:anko-sqlite:$anko_version"
+
+    //when we want to use image explained by Url
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

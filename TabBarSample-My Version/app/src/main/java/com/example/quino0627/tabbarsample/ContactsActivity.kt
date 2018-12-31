@@ -18,8 +18,7 @@ class ContactsActivity : Fragment(), ContactsAdapter.OnItemSelectedListener {
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-
+        Log.d("Check2", "Enter Contact Activity")
         val rootView = inflater!!.inflate(R.layout.fragment_contact, container, false)
         val recyclerView = rootView.findViewById<RecyclerView>(R.id.contacts_recycler_view) as RecyclerView
         val adapter = ContactsAdapter(contactsList!!)
@@ -39,8 +38,6 @@ class ContactsActivity : Fragment(), ContactsAdapter.OnItemSelectedListener {
         intent.putExtra("phone", selectedContact.phoneNumber)
         intent.putExtra("imageUrl", selectedContact.image.toString())
         startActivity(intent)
-
-
     }
 
 }

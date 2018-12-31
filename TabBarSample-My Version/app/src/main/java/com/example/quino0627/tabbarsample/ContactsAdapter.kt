@@ -24,7 +24,6 @@ class ContactsAdapter( val contactsList: ArrayList<Contact>): RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: ContactsAdapter.ViewHolder, position: Int) {
         holder.bountItem(contactsList[position])
-
         holder.container.onClick {
             listener.onItemSelected(contactsList[position])
         }
@@ -43,11 +42,8 @@ class ContactsAdapter( val contactsList: ArrayList<Contact>): RecyclerView.Adapt
         fun bountItem(contact: Contact) {
             val textName = itemView.findViewById<AppCompatTextView>(R.id.contact_name) as AppCompatTextView
             val textPhoneNumber = itemView.findViewById<AppCompatTextView>(R.id.contact_phone_number) as AppCompatTextView
-
-
             textName.text = contact.name
             textPhoneNumber.text = contact.phoneNumber
-
         }
     }
 
