@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
         fab.setOnClickListener {
-            var intent = Intent(this, ForTestActivity::class.java)
+            var intent = Intent(Intent.ACTION_INSERT, ContactsContract.Contacts.CONTENT_URI)
             Log.d("CheckIntent", intent.toString())
             startActivity(intent)
                 //view -> Snackbar.make(view, "주소록 추가하기 기능 implement", Snackbar.LENGTH_LONG).setAction("Action", null).show()
