@@ -14,54 +14,44 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.Glide.init
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
-class GalleryAdapter(private val place: IntArray, private val name: Array<String>, private val mContext: Context): RecyclerView.Adapter<GalleryAdapter.MyHolder>(){
+class GalleryAdapter(private val uriList: ArrayList<String>, private val mContext: Context): RecyclerView.Adapter<GalleryAdapter.MyHolder>(){
 
-    private lateinit var listener: OnItemSelectedListener
+    private lateinit var listener: GalleryAdapter.OnItemSelectedListener
 
-    fun setClickListener(listener: OnItemSelectedListener){
+    fun setClickListener(listener: GalleryAdapter.OnItemSelectedListener){
         this.listener = listener
+    }
+    override fun onCreateViewHolder(p0: ViewGroup, p1: Int): GalleryAdapter.MyHolder {
+        val v = LayoutInflater.from(p0.context).inflate(R.layout.real_gallery_view,p0, false)
+        return GalleryAdapter.MyHolder(v, mContext)
     }
 
     override fun getItemCount(): Int {
-        return place.size
+        //Log.d("CheckUrlLength", uriList.size.toString())
+        return uriList.size
     }
 
-    override fun onBindViewHolder(holder: GalleryAdapter.MyHolder, position: Int) {
-        holder.index(place[position], name[position])
+    override fun onBindViewHolder(p0: GalleryAdapter.MyHolder, p1: Int) {
+        p0.index(uriList[p1])
 
-        holder.container.onClick {
-            listener.onItemSelected(place[position])
-        }
-    }
-
-    override fun onCreateViewHolder(p0: ViewGroup, viewType: Int): GalleryAdapter.MyHolder {
-        val v = LayoutInflater.from(p0.context).inflate(
-            R.layout.gallery_view,p0,
-            false
-        )
-        return MyHolder(v, mContext)
-    }
-
-
-    class MyHolder(itemView : View, private val mContext: Context) : RecyclerView.ViewHolder(itemView){
-        private val iview : ImageView
-        private val tview : TextView
-        val container = itemView.findViewById<CardView>(R.id.image_container)
-
-        init {
-            iview = itemView.findViewById<View>(R.id.iview) as ImageView
-            tview = itemView.findViewById<View>(R.id.tview) as TextView
-
+        p0.container.onClick {
+            listener.onItemSelected(uriList[p1])
         }
 
-        fun index(item : Int, s: String){
-            Glide.with(mContext).load(item).into(iview)
-            tview.text = s
+    }
+
+    class MyHolder(itemView : View, mContext: Context) : RecyclerView.ViewHolder(itemView){
+        val mycontext = mContext
+        val container = itemView.findViewById<View>(R.id.iview) as ImageView
+
+        fun index(item : String){
+            Glide.with(mycontext).load(item).into(container)
         }
     }
 
     interface OnItemSelectedListener {
-        fun onItemSelected(selectedImage : Int)
+        fun onItemSelected(selectedImage : String)
+
     }
 
 }

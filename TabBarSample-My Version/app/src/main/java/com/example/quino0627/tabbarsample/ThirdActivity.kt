@@ -13,32 +13,14 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 
 
-class ThirdActivity : Fragment (), ThirdAdapter.OnItemSelectedListener{
+class ThirdActivity : Fragment (){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        Log.d("Check2", "Enter Third Activity")
 
-        val rootView = inflater!!.inflate(R.layout.fragment_picture, container, false)
-        val recyclerView = rootView.findViewById<RecyclerView>(R.id.galleryview) as RecyclerView
-        val adapter = ThirdAdapter(MainActivity.photoList!!, activity!!)
 
-        adapter.setClickListener(this)
-
-        val formanage = GridLayoutManager(activity, 2, LinearLayout.VERTICAL, false)
-        recyclerView.layoutManager = formanage
-        recyclerView.adapter = adapter
-        recyclerView.setHasFixedSize(false)
-        //return inflater.inflate(R.layout.fragment_third, container, false)
-        return rootView
-
-        //return inflater.inflate(R.layout.fragment_third, container, false)
+        return inflater.inflate(R.layout.fragment_third, container, false)
     }
 
-    override fun onItemSelected(selectedImage: String) {
-        Log.d("working?", "PLZ")
-        var intent = Intent(activity, FullScreenImageActivity_forMyVersion::class.java)
-        intent.putExtra("image", selectedImage)
-        startActivity(intent)
-    }
+
 }
