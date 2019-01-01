@@ -1,5 +1,6 @@
 package com.example.quino0627.tabbarsample
 
+import android.content.ContentResolver
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -24,6 +25,8 @@ import kotlinx.android.synthetic.main.fragment_contact.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_contact.view.*
 import org.jetbrains.anko.support.v4.startActivity
+import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.toast
 import java.io.BufferedInputStream
 
 class ContactsActivity : Fragment(), ContactsAdapter.OnItemSelectedListener {
@@ -105,16 +108,83 @@ class ContactsActivity : Fragment(), ContactsAdapter.OnItemSelectedListener {
         super.onResume()
     }
 
-    fun setContacts():ArrayList<Contact> {
-        val contactsList: ArrayList<Contact> = ArrayList()
-        val cursor = activity!!.contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, ContactsContract.Contacts.SORT_KEY_PRIMARY )
+//    fun setContacts():ArrayList<Contact> {
+//        val contactsList: ArrayList<Contact> = ArrayList()
+//        val cursor = activity!!.contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, ContactsContract.Contacts.SORT_KEY_PRIMARY )
+//        val default_photo = BitmapFactory.decodeResource(activity!!.getApplicationContext().getResources(), R.drawable.profile_pic)
+//        var contactImage: Bitmap
+//
+//
+//        if(cursor.count > 0) {
+//            while (cursor.moveToNext()) {
+//                val id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
+//                val my_contact_Uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, id)
+//                val photo_stream = ContactsContract.Contacts.openContactPhotoInputStream(activity!!.getContentResolver(), my_contact_Uri)
+//                val name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
+//
+//                val phoneNumber = (cursor.getString(
+//                    cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))).toInt()
+//                if (photo_stream != null) {
+//                    val buf = BufferedInputStream(photo_stream)
+//                    val btmp = BitmapFactory.decodeStream(buf)
+//                    contactImage = btmp
+//                }
+//                else {
+//                    contactImage = default_photo
+//                }
+//
+//                if (phoneNumber > 0) {
+//                    val cursorPhone = activity!!.contentResolver.query(
+//                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+//                        null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?", arrayOf(id), null)
+//
+//                    if(cursorPhone.count > 0) {
+//                        while (cursorPhone.moveToNext()) {
+//                            val phoneNumValue = cursorPhone.getString(
+//                                cursorPhone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+//                            contactsList.add(Contact(name, phoneNumValue, contactImage))
+//                        }
+//                    }
+//                    cursorPhone.close()
+//                }
+////                contactsList.add(
+////                    Contact(
+////                        cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)),
+////                        cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)),
+////                        contactImage
+////                    )
+////                )
+////                Log.d("////////////", contactsList.toString())
+//            }
+//        }else{
+//            toast("No Contacts Avaliable!")
+//        }
+//        cursor.close()
+//        //Log.d("contactsList", contactsList.toString())
+//        val adapter = ContactsAdapter(contactsList)
+////        Log.d("isAdapterExist?",adapter.toString())
+////        Log.d("isRecyclerViewNull", ((contacts_recycler_view == null).toString()))
+//        return contactsList
+//    }
+
+
+    private fun setContacts() : ArrayList<Contact> {
+        val phoneNumberList = ArrayList<Contact>()
+        val resolver: ContentResolver = activity!!.contentResolver;
         val default_photo = BitmapFactory.decodeResource(activity!!.getApplicationContext().getResources(), R.drawable.profile_pic)
         var contactImage: Bitmap
-        if(cursor.count > 0) {
+        val contentResolver = activity!!.getContentResolver()
+        val cursor = resolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null,
+            null)
+
+        if (cursor.count > 0) {
             while (cursor.moveToNext()) {
                 val id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
                 val my_contact_Uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, id)
                 val photo_stream = ContactsContract.Contacts.openContactPhotoInputStream(activity!!.getContentResolver(), my_contact_Uri)
+                val name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME))
+                val phoneNumber = (cursor.getString(
+                    cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))).toInt()
                 if (photo_stream != null) {
                     val buf = BufferedInputStream(photo_stream)
                     val btmp = BitmapFactory.decodeStream(buf)
@@ -123,24 +193,26 @@ class ContactsActivity : Fragment(), ContactsAdapter.OnItemSelectedListener {
                 else {
                     contactImage = default_photo
                 }
-                contactsList.add(
-                    Contact(
-                        cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)),
-                        cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)),
-                        contactImage
-                    )
-                )
-                Log.d("////////////", contactsList.toString())
+                if (phoneNumber > 0) {
+                    val cursorPhone = contentResolver.query(
+                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                        null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=?", arrayOf(id), null)
+
+                    if(cursorPhone.count > 0) {
+                        while (cursorPhone.moveToNext()) {
+                            val phoneNumValue = cursorPhone.getString(
+                                cursorPhone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                            phoneNumberList.add(Contact(name, phoneNumValue, contactImage))
+                        }
+                    }
+                    cursorPhone.close()
+                }
             }
-        }else{
-            Log.d("No Contacts Avaliable", "asdf")
+        } else {
+            toast("No contacts available!")
         }
         cursor.close()
-        //Log.d("contactsList", contactsList.toString())
-        val adapter = ContactsAdapter(contactsList)
-//        Log.d("isAdapterExist?",adapter.toString())
-//        Log.d("isRecyclerViewNull", ((contacts_recycler_view == null).toString()))
-        return contactsList
+        return phoneNumberList
     }
 
     override fun onItemSelected(selectedContact: Contact) {
