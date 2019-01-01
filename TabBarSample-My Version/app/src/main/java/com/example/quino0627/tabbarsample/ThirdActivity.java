@@ -146,7 +146,7 @@ public class ThirdActivity extends Fragment implements View.OnClickListener {
         paintView.reset();
         paintView.invalidate();
         resultText.setText("");
-        translationText.setText("");
+        //translationText.setText("");
         altLayout.setVisibility(View.INVISIBLE);
     }
 
