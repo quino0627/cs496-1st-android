@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
-        ActivityCompat.requestPermissions(this, permissions, MULTIPLE_PERMISSIONS)
+//        ActivityCompat.requestPermissions(this, permissions, MULTIPLE_PERMISSIONS)
 
     }
 
