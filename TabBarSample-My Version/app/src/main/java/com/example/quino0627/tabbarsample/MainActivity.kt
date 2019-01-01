@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
 
     fun setPhotos(): ArrayList<String> {
         val photoList : ArrayList<String> = ArrayList()
-        Log.d("Check1", "hello")
+        Log.d("Check1", "Doing setPhotos in MainActivity")
         //val cursor = contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,null,null,null, MediaStore.Images.ImageColumns.DATE_TAKEN + "DESC")
         val projection = arrayOf(MediaStore.Images.Media.DATA)
         val cursor = contentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, // 이미지 컨텐트 테이블
@@ -127,7 +127,7 @@ class MainActivity : AppCompatActivity() {
         )// DATA를 출력
         // 모든 개체 출력
 
-        Log.d("cursor", cursor.toString())
+        Log.d("Cursor in setPhotos", cursor.toString())
 
         if (cursor != null) {
             while (cursor.moveToNext()) {
@@ -137,7 +137,7 @@ class MainActivity : AppCompatActivity() {
                 //photoList.add(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)))
                 photoList.add(imageUri.toString())
 
-                Log.d("ASDFASDFASDF", imageUri.toString())
+                Log.d("There is Photo in setPhotos", imageUri.toString())
 
                 //photoList.add(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)))
             }

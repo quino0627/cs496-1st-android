@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ImageView
+import com.bumptech.glide.Glide
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
 class ContactsAdapter( val contactsList: ArrayList<Contact>): RecyclerView.Adapter<ContactsAdapter.ViewHolder>(){
@@ -42,8 +44,11 @@ class ContactsAdapter( val contactsList: ArrayList<Contact>): RecyclerView.Adapt
         fun bountItem(contact: Contact) {
             val textName = itemView.findViewById<AppCompatTextView>(R.id.contact_name) as AppCompatTextView
             val textPhoneNumber = itemView.findViewById<AppCompatTextView>(R.id.contact_phone_number) as AppCompatTextView
+            val imageView = itemView.findViewById(R.id.iv_profile) as ImageView
             textName.text = contact.name
             textPhoneNumber.text = contact.phoneNumber
+            imageView.setImageBitmap(contact.image)
+
         }
     }
 

@@ -94,9 +94,7 @@ class ContactsActivity : Fragment(), ContactsAdapter.OnItemSelectedListener {
 
     override fun onResume() {
         contactList1 = setContacts()
-        Log.d("Resume contactsList", contactList1.toString())
         val adapter = ContactsAdapter(contactList1)
-        Log.d("Resume adapter", adapter.toString())
         adapter.setClickListener(this)
 
         val recyclerView = contacts_recycler_view
@@ -112,7 +110,6 @@ class ContactsActivity : Fragment(), ContactsAdapter.OnItemSelectedListener {
         val cursor = activity!!.contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, null, null, ContactsContract.Contacts.SORT_KEY_PRIMARY )
         val default_photo = BitmapFactory.decodeResource(activity!!.getApplicationContext().getResources(), R.drawable.profile_pic)
         var contactImage: Bitmap
-        Log.d("cursor", cursor.toString())
         if(cursor.count > 0) {
             while (cursor.moveToNext()) {
                 val id = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID))
@@ -133,15 +130,16 @@ class ContactsActivity : Fragment(), ContactsAdapter.OnItemSelectedListener {
                         contactImage
                     )
                 )
+                Log.d("////////////", contactsList.toString())
             }
         }else{
             Log.d("No Contacts Avaliable", "asdf")
         }
         cursor.close()
-        Log.d("contactsList", contactsList.toString())
+        //Log.d("contactsList", contactsList.toString())
         val adapter = ContactsAdapter(contactsList)
-        Log.d("isAdapterExist?",adapter.toString())
-        Log.d("isRecyclerViewNull", ((contacts_recycler_view == null).toString()))
+//        Log.d("isAdapterExist?",adapter.toString())
+//        Log.d("isRecyclerViewNull", ((contacts_recycler_view == null).toString()))
         return contactsList
     }
 
