@@ -41,10 +41,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-        <Button android:id="@+id/buttonClear" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Clear"/>
-        <Button android:id="@+id/buttonSpace" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Space"/>
-        <Button android:id="@+id/buttonBackspace" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="BSpace"/>
-        <Button android:id="@+id/buttonClassify" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Classify"/>
+        <Button android:id="@+id/buttonClear" android:textSize="12sp" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Clear"/>
+        <Button android:id="@+id/buttonSpace" android:textSize="12sp" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Space"/>
+        <Button android:id="@+id/buttonBackspace" android:textSize="12sp" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="BSpace"/>
+        <Button android:id="@+id/buttonClassify" android:textSize="12sp" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Classify"/>
 
     </LinearLayout>
 
@@ -68,15 +68,7 @@
                 android:backgroundTint="@android:color/darker_gray"
                 android:layout_weight=".85"/>
 
-        <Button
-                android:id="@+id/buttonSubmit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="@string/submit"
-                style="?android:borderlessButtonStyle"
-                android:layout_weight=".15"
-        />
+
     </LinearLayout>
 
     <LinearLayout
@@ -120,14 +112,5 @@
                 android:text="" />
 
     </LinearLayout>
-    <TextView
-            android:id="@+id/translationText"
-            android:textSize="24sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.23"
-            android:text=""
-
-    />
 
 </LinearLayout>
