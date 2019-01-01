@@ -18,6 +18,7 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -48,8 +49,9 @@ class MainActivity : AppCompatActivity() {
         container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
 
-        ActivityCompat.requestPermissions(this, permissions, MULTIPLE_PERMISSIONS)
 
+
+        ActivityCompat.requestPermissions(this, permissions, MULTIPLE_PERMISSIONS)
     }
 
     override fun onStart() {
