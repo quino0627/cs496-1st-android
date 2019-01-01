@@ -62,8 +62,8 @@ public class ThirdActivity extends Fragment implements View.OnClickListener {
         Button spaceButton = (Button) view.findViewById(R.id.buttonSpace);
         spaceButton.setOnClickListener(this);
 
-//        Button submitButton = (Button) view.findViewById(R.id.buttonSubmit);
-//        submitButton.setOnClickListener(this);
+        Button submitButton = (Button) view.findViewById(R.id.buttonSubmit);
+        submitButton.setOnClickListener(this);
 
         altLayout = (LinearLayout) view.findViewById(R.id.altLayout);
         altLayout.setVisibility(View.INVISIBLE);
@@ -77,8 +77,8 @@ public class ThirdActivity extends Fragment implements View.OnClickListener {
         alt4 = (Button) view.findViewById(R.id.alt4);
         alt4.setOnClickListener(this);
 
-//        translationText = (TextView) view.findViewById(R.id.translationText);
-//        resultText = (EditText) view.findViewById(R.id.editText);
+        translationText = (TextView) view.findViewById(R.id.translationText);
+        resultText = (EditText) view.findViewById(R.id.editText);
 
         loadModel();
 
@@ -109,10 +109,10 @@ public class ThirdActivity extends Fragment implements View.OnClickListener {
             case R.id.buttonSpace:
                 space();
                 break;
-//            case R.id.buttonSubmit:
-//                altLayout.setVisibility(View.INVISIBLE);
-////                translate();
-                //break;
+            case R.id.buttonSubmit:
+                altLayout.setVisibility(View.INVISIBLE);
+                translate();
+                break;
             case R.id.alt1:
             case R.id.alt2:
             case R.id.alt3:
@@ -167,22 +167,22 @@ public class ThirdActivity extends Fragment implements View.OnClickListener {
     /**
      * Perform the translation using the current Korean text in the text input field.
      */
-//    private void translate() {
-//        String text = resultText.getText().toString();
-//        if (text.isEmpty()) {
-//            return;
-//        }
-//
-//        HashMap<String, String> postData = new HashMap<>();
-//        postData.put("text", text);
-//        postData.put("source", "ko");
-//        postData.put("target", "en");
-//        String username = getResources().getString(R.string.username);
-//        String password = getResources().getString(R.string.password);
-//        HangulTranslator translator = new HangulTranslator(postData, translationText, username,
-//                password);
-//        translator.execute();
-//    }
+    private void translate() {
+        String text = resultText.getText().toString();
+        if (text.isEmpty()) {
+            return;
+        }
+
+        HashMap<String, String> postData = new HashMap<>();
+        postData.put("text", text);
+        postData.put("source", "ko");
+        postData.put("target", "en");
+        String username = getResources().getString(R.string.username);
+        String password = getResources().getString(R.string.password);
+        HangulTranslator translator = new HangulTranslator(postData, translationText, username,
+                password);
+        translator.execute();
+    }
 
     /**
      * This function will switch out the last classified character with the alternative given the

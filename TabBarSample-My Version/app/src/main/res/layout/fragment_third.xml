@@ -68,7 +68,15 @@
                 android:backgroundTint="@android:color/darker_gray"
                 android:layout_weight=".85"/>
 
-
+        <Button
+                android:id="@+id/buttonSubmit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="@string/submit"
+                style="?android:borderlessButtonStyle"
+                android:layout_weight=".15"
+        />
     </LinearLayout>
 
     <LinearLayout
@@ -112,6 +120,14 @@
                 android:text="" />
 
     </LinearLayout>
+    <TextView
+            android:id="@+id/translationText"
+            android:textSize="24sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.23"
+            android:text=""
 
+    />
 
 </LinearLayout>
