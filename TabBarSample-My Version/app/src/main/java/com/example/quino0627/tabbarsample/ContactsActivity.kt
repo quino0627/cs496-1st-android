@@ -175,7 +175,7 @@ class ContactsActivity : Fragment(), ContactsAdapter.OnItemSelectedListener {
         var contactImage: Bitmap
         val contentResolver = activity!!.getContentResolver()
         val cursor = resolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null,
-            null)
+            ContactsContract.Contacts.SORT_KEY_PRIMARY )
 
         if (cursor.count > 0) {
             while (cursor.moveToNext()) {
